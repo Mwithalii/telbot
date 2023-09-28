@@ -13,23 +13,33 @@ BOT_USERNAME: Final = '@otpverifierBot'
 
 #commands
 async def start_command(Update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await Update.message.reply_text('Hi! Welcome to OTP Verifier Bot.')
+    await Update.message.reply_text('Hi! \n Welcome to Summarizer Bot. \n 1.To open the summarizer, type out the command /summarizer \n 2.To open the query document, type out the command /query \n 3.To stop chatting, type out the command /exit')
 
-async def help_command(Update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await Update.message.reply_text('Hi! I am an OTP Verifier Bot. I can verify OTPs for you.')
+async def summarizer(Update: Update, context: ContextTypes.DEFAULT_TYPE):
+   import summarizer
+
+async def query(Update: Update, context: ContextTypes.DEFAULT_TYPE):
+   import query_document
+
+async def exit(Update: Update, context: ContextTypes.DEFAULT_TYPE):
+   await Update.message.reply_text('Thank you for using Summarizer Bot. \n Have a nice day!')
+   
 
 #handle responses
 def handle_response(text: str) -> str:
     processed: str = text.lower()
 
-    if 'hello' in processed:
-        return 'Hi!'
+    if 'hi' in processed:
+        return 'Hi! My name is Summarizer Bot. \n I am here to make your work easier by summarizing documents for you and querying documents. \n 1. To open the document summarizer, reply with SUMMARIZE \n 2. To answer queries on a document, reply with QUERY \n 3. To stop chatting, reply with EXIT'
     
-    if 'how are you' in processed:
-        return 'I am fine. How are you?'
+    if 'summarize' in processed:
+        import summarizer
     
-    if 'fine' in processed:
-        return 'Nice to hear that.'
+    if 'query' in processed:
+        import query_document
+    
+    if 'exit' in processed:
+        return 'Thank you for using Summarizer Bot. \n Have a nice day!'
     
     return 'Sorry, I don\'t understand you.'
 
@@ -60,7 +70,9 @@ if __name__ == '__main__':
 
     #commands
     app.add_handler(CommandHandler('start', start_command))
-    app.add_handler(CommandHandler('help', help_command))
+    app.add_handler(CommandHandler('summarizer', summarizer))
+    app.add_handler(CommandHandler('query', query))
+    app.add_handler(CommandHandler('exit', exit))
 
     #messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
