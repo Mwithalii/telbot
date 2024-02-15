@@ -10,8 +10,7 @@ load_dotenv()
 api_key = os.getenv("AI_API_KEY")
 openai.api_key = api_key
 
-# Function to process the user's question and document
-# ...
+
 
 # Function to process the user's question and document
 def answer_question():

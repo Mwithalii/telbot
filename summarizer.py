@@ -103,6 +103,7 @@ def summarize():
 root = tk.Tk()
 root.title('Chatgpt PDF Summarizer ')
 
+
 # File path label and entry field
 file_path_label = tk.Label(root, text='File path:')
 file_path_label.pack(pady=10)

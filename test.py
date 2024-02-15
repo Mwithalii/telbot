@@ -11,6 +11,113 @@ api_key = os.getenv("API_KEY")
 TOKEN: Final = api_key
 BOT_USERNAME: Final = '@otpverifierBot'
 
+
+##########################################################
+
+""" def extract_text(filepath, progress_var):
+    # Open the PDF file in read-binary mode
+    with open(filepath, 'rb') as pdf_file:
+        # Create a PDF reader object
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+
+        # Create an empty string to store the text
+        text = ''
+
+        # Loop through each page in the PDF file
+        for page_num in range(len(pdf_reader.pages)):
+            # Update the progress bar
+            progress_var.set(page_num + 1)
+            root.update_idletasks()
+            root.update()
+
+            # Get the page object
+            page_obj = pdf_reader.pages[page_num]
+
+            # Extract the text from the page
+            page_text = page_obj.extract_text()
+
+            # Add the text to the string
+            text += page_text
+
+    return text """
+
+
+""" def generate_summary(text, status_var):
+    status_var.set('Generating summary...')
+    words = text.split()
+    max_words = 1000
+    prompt = " ".join(words[:max_words])
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=f"Summarize this: {prompt}",
+        temperature=0.9,
+        max_tokens=256,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0
+    )
+    summary = response.choices[0].text
+    status_var.set('Summary generated')
+    progress_var.set(100)
+    return summary """
+
+
+""" def browse_file():
+    filepath = filedialog.askopenfilename()
+    if filepath.endswith('.pdf'):
+        file_path_var.set(filepath)
+        output_text.delete(1.0, tk.END)
+    else:
+        messagebox.showerror(title='Error', message='Please select a PDF file.') """
+
+
+""" def clear_output():
+    output_text.delete(1.0, tk.END) """
+
+
+""" def copy_to_clipboard():
+    pyperclip.copy(output_text.get(1.0, tk.END)) """
+
+
+""" def save_summary():
+    filepath = filedialog.asksaveasfilename(defaultextension='.txt')
+    with open(filepath, 'w') as f:
+        f.write(output_text.get(1.0, tk.END)) """
+
+
+""" def summarize():
+    filepath = file_path_var.get()
+    if filepath:
+        progress_var.set(0)
+        pdf_text = extract_text(filepath, progress_var)
+        summary = generate_summary(pdf_text, status_var)
+        output_text.delete(1.0, tk.END)
+        output_text.insert(tk.END, summary)
+    else:
+        messagebox.showerror(title='Error', message='Please select a PDF file.') """
+
+
+import tkinter as tk
+from tkinter import filedialog
+
+def browse_pdf_file():
+    root = tk.Tk()
+    root.withdraw()  # Hide the main tkinter window
+
+    file_path = filedialog.askopenfilename(
+        filetypes=[("PDF files", "*.pdf")],
+        title="Select a PDF file"
+    )
+
+    if file_path:
+        print("Selected PDF file:", file_path)
+        # You can replace the print statement with any code to handle the selected file.
+    else:
+        print("No file selected.")
+
+##########################################################
+
+
 #commands
 async def start_command(Update: Update, context: ContextTypes.DEFAULT_TYPE):
     await Update.message.reply_text('Hi! \n Welcome to Summarizer Bot. \n 1.To open the summarizer, type out the command /summarizer \n 2.To open the query document, type out the command /query \n 3.To stop chatting, type out the command /exit')
